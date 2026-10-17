@@ -1,0 +1,13 @@
+pandas>=2.3.3
+PyYAML>=6.0.3
+scikit-learn
+numpy>=2.2.6
+h5py>=3.16.0
+tqdm>=4.67.3
+pyarrow>=24.0.0
+# polars[gpu] cuda 12
+cudf-polars-cu13 # cuda 13
+altair
+xgboost
+jupyterlab
+#fuxictr>=2.3.10 we install separately (eg from github branch)

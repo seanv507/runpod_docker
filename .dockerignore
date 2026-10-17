@@ -1,0 +1,4 @@
+# Only requirements.txt and run.sh are needed in the build context
+*
+!requirements.txt
+!run.sh

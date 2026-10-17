@@ -1,0 +1,27 @@
+# FCN / FuxiCTR experiments on Criteo.
+# Values under `pod` are defaults for launch.py options (CLI flags override them).
+# Values under `env` become pod environment variables read by run.sh.
+# Secrets use RunPod secrets ({{ RUNPOD_SECRET_<name> }}), resolved by RunPod at pod start;
+# create them at https://console.runpod.io/user/secrets
+
+pod:
+  name: fcn
+  image: seanv507/fcn_runpod:0.0.8
+  gpu: NVIDIA GeForce RTX 4090
+  gpu_count: 1
+  cloud_type: SECURE
+  volume_gb: 100
+  container_disk_gb: 30
+  allowed_cuda_versions: ["13.0"]  # base image is cu1300
+
+env:
+  REPOS: >-
+    git@github.com:seanv507/FuxiCTR.git#preprocess_polars
+    git@github.com:seanv507/FCN.git#update_fuxictr_2310
+  EDITABLE_INSTALLS: FuxiCTR
+  PIP_PACKAGES: huggingface_hub wandb
+  HF_DATASETS: seanv507/Criteo
+  EXTRA_DOWNLOADS: https://borgelt.net/bin/eclat
+  GITHUB_SSH: "{{ RUNPOD_SECRET_github_ssh }}"
+  GITHUB_SSH_PUB: "{{ RUNPOD_SECRET_github_ssh_pub }}"
+  WANDB_API_KEY: "{{ RUNPOD_SECRET_wandb_key }}"
