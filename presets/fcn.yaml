@@ -18,10 +18,13 @@ env:
   REPOS: >-
     git@github.com:seanv507/FuxiCTR.git#preprocess_polars
     git@github.com:seanv507/FCN.git#update_fuxictr_2310
-  EDITABLE_INSTALLS: FuxiCTR
-  PIP_PACKAGES: huggingface_hub wandb
-  HF_DATASETS: seanv507/Criteo
-  EXTRA_DOWNLOADS: https://borgelt.net/bin/eclat
+    git@github.com:seanv507/criteo_boost.git
+
   GITHUB_SSH: "{{ RUNPOD_SECRET_github_ssh }}"
   GITHUB_SSH_PUB: "{{ RUNPOD_SECRET_github_ssh_pub }}"
-  WANDB_API_KEY: "{{ RUNPOD_SECRET_wandb_key }}"
+  HF_TOKEN: "{{ RUNPOD_SECRET_HF_TOKEN }}"
+  WANDB_API_KEY: "{{ RUNPOD_SECRET_WANDB_API_KEY }}"
+  HF_DATASETS: seanv507/Criteo
+  EDITABLE_INSTALLS: FuxiCTR
+  PIP_PACKAGES: huggingface_hub wandb
+  EXTRA_DOWNLOADS: https://borgelt.net/bin/eclat

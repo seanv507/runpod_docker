@@ -23,7 +23,7 @@ POD_DEFAULTS = {
     "image": None,
     "gpu": "NVIDIA GeForce RTX 4090",
     "gpu_count": 1,
-    "cloud_type": "SECURE",
+    "cloud_type": None,
     "volume_gb": 50,
     "container_disk_gb": 30,
     "network_volume_id": None,

@@ -66,7 +66,7 @@ Command-line flags override the preset's `pod` section. `--env KEY=VALUE` adds o
 Presets refer to secrets as RunPod secrets, for example `GITHUB_SSH: "{{ RUNPOD_SECRET_github_ssh }}"`, so the values never leave RunPod. Create these secrets in the RunPod console (Settings → Secrets) before you launch:
 
 - `github_ssh`, `github_ssh_pub`: a GitHub deploy key, or a personal SSH key with access to the repos
-- `wandb_key`: a Weights & Biases API key
+- `WANDB_API_KEY`: a Weights & Biases API key
 
 ## Adding a project
 

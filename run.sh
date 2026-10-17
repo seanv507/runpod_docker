@@ -79,7 +79,8 @@ for dataset in $HF_DATASETS; do
 done
 
 if [[ -n "$WANDB_API_KEY" ]]; then
-    wandb login  # reads WANDB_API_KEY from the environment
+    wandb login
+    # reads WANDB_API_KEY from the environment
 fi
 
 for download_url in $EXTRA_DOWNLOADS; do
