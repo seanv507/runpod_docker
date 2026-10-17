@@ -7,7 +7,7 @@ Docker image and launcher for RunPod GPU pods. Extracted from the FCN repo (`~/p
 - `run.sh`: runs at container start. It starts the base image's `/start.sh` (Jupyter/SSH) in the background, then does workspace setup in `/workspace/code` and `/workspace/data`, all driven by env vars. Each step is skipped when its variable is unset. Variables: `GITHUB_SSH`/`GITHUB_SSH_PUB`, `REPOS` (`url#branch`; `#` because branches may contain `/`), `EDITABLE_INSTALLS`, `PIP_PACKAGES`, `HF_DATASETS`, `WANDB_API_KEY`, `EXTRA_DOWNLOADS`, `POST_SETUP_CMD`, `CODE_DIR`/`DATA_DIR`. Clones are skipped when the folder exists, so restarts on a persistent volume are safe.
 - `presets/*.yaml`: a `pod:` section holds the defaults for `launch.py` flags, and an `env:` section holds the pod env vars for `run.sh`. Secrets are always RunPod secret refs (`{{ RUNPOD_SECRET_<name> }}`), never plaintext. `fcn.yaml` is the FCN/FuxiCTR Criteo setup.
 - `launch.py`: uses the RunPod Python SDK (`runpod`). Subcommands are `create`, `list`, `list-gpus`, `stop` and `terminate`. CLI flags override the preset, and `--env KEY=VALUE` adds or overrides an env var (`KEY=` removes it). Needs `RUNPOD_API_KEY`, except for `--dry-run`.
-- `reference/start.sh`: a copy of the base image's `/start.sh`, for reference only. `template/` is the upstream RunPod pod-template this repo started from. Don't edit either.
+- `reference/start.sh`: a copy of the base image's `/start.sh`, for reference only. Don't edit it.
 
 ## Commands
 ```bash

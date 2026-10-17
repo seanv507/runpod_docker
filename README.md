@@ -10,7 +10,6 @@ A Docker image and launcher for RunPod GPU pods. The image extends a RunPod PyTo
 - `launch.py`: creates, lists, stops and terminates pods.
 - `presets/*.yaml`: per-project pod settings and env vars. `fcn.yaml` is the FCN/FuxiCTR Criteo setup.
 - `reference/start.sh`: a copy of the base image's `/start.sh`, for reference.
-- `template/`: the upstream RunPod pod-template this repo started from.
 
 ## Build and push
 
