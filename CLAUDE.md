@@ -26,4 +26,4 @@ docker tag fcn_runpod:<tag> seanv507/fcn_runpod:<tag> && docker push seanv507/fc
 - Keep project-specific setup in presets, not in `run.sh`. If a new setup step is needed, add it to `run.sh` as a generic env-var-gated step.
 
 ## Status (2026-10-17)
-The initial version is committed locally. There is no git remote yet. The image on Docker Hub (`seanv507/fcn_runpod:0.0.8`) still has the old FCN-specific `run.sh`, so a rebuild and push of a new tag is pending. The RunPod secrets `github_ssh`, `github_ssh_pub` and `wandb_key` must exist before launching.
+The initial version is committed locally. There is no git remote yet. The current image on Docker Hub is `seanv507/fcn_runpod:0.0.9`, built from this repo's generic `run.sh` (0.0.8 and earlier have the old FCN-specific one). The RunPod secrets `github_ssh`, `github_ssh_pub` and `wandb_key` must exist before launching.

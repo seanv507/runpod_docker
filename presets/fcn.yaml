@@ -6,7 +6,7 @@
 
 pod:
   name: fcn
-  image: seanv507/fcn_runpod:0.0.8
+  image: seanv507/fcn_runpod:0.0.9
   gpu: NVIDIA GeForce RTX 4090
   gpu_count: 1
   cloud_type: SECURE

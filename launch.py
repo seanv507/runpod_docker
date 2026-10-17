@@ -141,7 +141,7 @@ def main():
     create = sub.add_parser("create", help="create a pod")
     create.add_argument("--preset", help="YAML preset with `pod` and `env` sections")
     create.add_argument("--name")
-    create.add_argument("--image", help="docker image, e.g. seanv507/fcn_runpod:0.0.8")
+    create.add_argument("--image", help="docker image, e.g. seanv507/fcn_runpod:0.0.9")
     create.add_argument("--gpu", help="GPU type id (see list-gpus)")
     create.add_argument("--gpu-count", dest="gpu_count", type=int)
     create.add_argument("--cloud-type", dest="cloud_type", choices=["SECURE", "COMMUNITY", "ALL"])
