@@ -14,18 +14,18 @@ A Docker image and launcher for RunPod GPU pods. The image extends a RunPod PyTo
 ## Build and push
 
 ```bash
-docker build --platform linux/amd64 -f Dockerfile.uv -t fcn_runpod:0.0.9 .
-docker tag fcn_runpod:0.0.9 seanv507/fcn_runpod:0.0.9
+docker build --platform linux/amd64 -f Dockerfile.uv -t fcn_runpod:0.1.1 .
+docker tag fcn_runpod:0.1.1 seanv507/fcn_runpod:0.1.1
 docker login
-docker push seanv507/fcn_runpod:0.0.9
+docker push seanv507/fcn_runpod:0.1.1
 ```
 
 After pushing a new tag, update `pod.image` in the preset, or pass `--image`.
 
 Test locally. With no env vars set, every setup step is skipped:
 ```bash
-docker run --rm -it --platform linux/amd64 fcn_runpod:0.0.9
-docker run --rm -it --platform linux/amd64 fcn_runpod:0.0.9 /bin/bash
+docker run --rm -it --platform linux/amd64 fcn_runpod:0.1.1
+docker run --rm -it --platform linux/amd64 fcn_runpod:0.1.1 /bin/bash
 ```
 
 ## run.sh environment variables

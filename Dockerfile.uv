@@ -20,16 +20,45 @@ ENV VIRTUAL_ENV=/opt/.venvs/ML
 ENV UV_LINK_MODE=copy
 ENV UV_PYTHON_CACHE_DIR=/opt/uv-cache/uv/python
 ENV UV_CACHE_DIR=/opt/uv-cache/
+# --system-site-packages so the venv sees the base image's torch
 RUN --mount=type=cache,target=/opt/uv-cache/uv/python \
-    uv venv  ${VIRTUAL_ENV} --seed
+    uv venv  ${VIRTUAL_ENV} --seed --system-site-packages
 # --python ${PYTHON_VERSION}
 ENV PATH=${VIRTUAL_ENV}/bin:$PATH
 
 # Copy requirements file
 COPY requirements.txt /app/
 
-# Install Python dependencies with uv
-RUN uv pip install  -r /app/requirements.txt
+# Install Python dependencies with uv. The cache mount keeps downloaded
+# wheels out of the image layer.
+RUN --mount=type=cache,target=/opt/uv-cache \
+    uv pip install  -r /app/requirements.txt
+
+# Ninja (newer than apt's ninja-build)
+ARG NINJA_VERSION=1.13.2
+RUN mkdir /tmp/ninja && cd /tmp/ninja && \
+    wget -q https://github.com/ninja-build/ninja/releases/download/v${NINJA_VERSION}/ninja-linux.zip && \
+    unzip ninja-linux.zip && \
+    install -m 755 ninja /usr/local/bin/ninja && \
+    rm -rf /tmp/ninja
+
+# Build XGBoost with CUDA from a fork branch. Cloned over HTTPS since no SSH
+# key is available at build time. No GPU is needed: CMake's default CUDA 13
+# arch list (75;80;90;100;120 + PTX) is used, so the wheel runs on any RunPod GPU.
+ARG XGBOOST_REPO=seanv507/xgboost
+ARG XGBOOST_BRANCH=cat_order_smooth
+# Invalidates the build cache whenever the branch head moves
+ADD https://api.github.com/repos/${XGBOOST_REPO}/git/refs/heads/${XGBOOST_BRANCH} /tmp/xgboost-ref.json
+# python-package bundles the prebuilt lib/libxgboost.so instead of rebuilding it
+RUN --mount=type=cache,target=/opt/uv-cache \
+    git clone --recursive --depth 1 --shallow-submodules --branch ${XGBOOST_BRANCH} \
+        https://github.com/${XGBOOST_REPO}.git /tmp/xgboost && \
+    cmake -B /tmp/xgboost/build -S /tmp/xgboost -DUSE_CUDA=ON -GNinja && \
+    ninja -C /tmp/xgboost/build && \
+    uv pip install /tmp/xgboost/python-package && \
+    python -c "import xgboost; assert xgboost.build_info()['USE_CUDA'], 'xgboost built without CUDA'" && \
+    python -c "import torch" && \
+    rm -rf /tmp/xgboost /tmp/xgboost-ref.json
 
 # Copy application files
 #COPY . /app
